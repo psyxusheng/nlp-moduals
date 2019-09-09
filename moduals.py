@@ -100,7 +100,7 @@ def _bilstm(inputs,lens,units,training = True,keep_prob=.5,scope='bilstm_extract
                                                         inputs          = inputs,
                                                         sequence_length = lens,
                                                         dtype           = tf.float32,
-                                                        scope           = 'recuurent')
+                                                        scope           = 'recurrent')
         states = tf.concat(states,axis=-1,name = 'concat')
     return states
 
@@ -111,7 +111,7 @@ def _encoder(inputs,lens,units,training=True,keep_prob=.5,scope='encoding'):
                         keep_prob=keep_prob,scope=scope+'/bilstm1')
     inp_units = inputs.get_shape().as_list()[-1]
     out_units = states.get_shape().as_list()[-1]
-    if inp_units != units:
+    if inp_units != out_units:
         res   = tf.layers.conv1d(inputs,filters = out_units,kernel_size=1,strides=1,
                                 name = 'resconnection',padding='valid',
                                 activation = None,kernel_initializer=xavier_initializer())
